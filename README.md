@@ -27,6 +27,20 @@ Language Processing (NLP) and machine learning into the clinical trial recruitme
 project explores the development and implementation of a sophisticated "Clinical Trial Matching"
 system, leveraging these advanced technologies to revolutionize the patient recruitment landscape.
 
+Digital approaches such as keyword-based approaches, data analytics, etc. have been approaching the forefront of replacing traditional methods and the latest among these is the usage of Large Language Models. We have proposed one such system.
+
+### Method
+
+In our project, we propose to make use of use of bi-encoder model to rank the clincal trials based on relevance of inclusion criteria. A bi-encoder model is one where two encoders are used to encode two sentences, and then the embeddings obtained are compared using a metric such as the cosine similarity or dot score. Our model, based on the one highlighted in [2], consists of Sentence-BERT models that have been finetuned on MSMARCO dataset for document ranking. In additon to these pretrined models, we train our own model by finetuning a ClincalBERT model for the MSMARCO data based on the MultipleNegativesRankingLoss approach, in which a model is trained using triplets consisting of a query, a positive document and a negative document, such that the model creates encodings for all three. The encodings must be such that there must be small distances between the positive document/passage and the query, and large distances between the query and the negative examples.
+
+The authors proposed a method of better performance by ensuring good negative example by using a Cross Encoder to find score for such negative examples and then using these for training the bi-encoder. We have used their training code to train a ClinicalBERT model in order to account for the medical and clincial jargon present in the proposed clinical trial reports.
+
+There have been systems which have used the aforementioned approach of document ranking for Clincal Trial Matching, including IBM Watson, however, we aim to specifically test the appicability of a BERT-based model for the same.
+
+### Limitations
+
+The biggest challenge we faced during this project is the lack of public-domain medical data. Due to concern about patient privacy and rights, clincal reports are not made available in the public domain and this forced us to rely on synthetically generated data for our purpose, which may not accrately reflect the real-world.
+
 ## Experimental Setup
 
 ### Dataset
@@ -80,7 +94,11 @@ We considered the following models and mentioned below each model is the NCT ID,
 
 As we can see in the above results, our model as well as the models trained by the sentence-transformers return the same (and correct) most relevant clincal trial, however, unlike our model, the other had a higher cosine similarity. The model ' Capreolus/bert-base-msmarco' gave another trial as the most relevant trial with a lower cosine similarity. We conclude that our model performs well for the ranking of the clinical trials, however, we must further test it with more detailed patients descriptions. 
 
-(The most relevant clinical trial was: Gait Speed for Predicting Cardiovascular Events After Myocardial Infarction)
+(The most relevant clinical trial was: Gait Speed for Predicting Cardiovascular Events After Myocardial Infarction.)
+
+## Discussion
+
+Our project aimed to implement a system that assists healthcare professionals and patients to find the relevant clinical trials. While we have succeded in defining such a system, which takes the patient condition as input, fetches the clinical trials, and then based on the inclusion criteria for the trial suggests the most relevant ones, we are yet to ascertain the accuracy of this system in a real-world scenario. A major hurdle as previously discussed, is the, rightful, lack of access to actual medical data due to HIPAA rules which would have let us test the model more thoroughly. As it stands, our proposed system of using a pretrained bi-encoder model finetuned on the MSMARCO dataset for document ranking, proves to be promising.
 
 ## Relevant Links:
 
