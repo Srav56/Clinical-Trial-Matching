@@ -27,6 +27,26 @@ Language Processing (NLP) and machine learning into the clinical trial recruitme
 project explores the development and implementation of a sophisticated "Clinical Trial Matching"
 system, leveraging these advanced technologies to revolutionize the patient recruitment landscape.
 
+## Experimental Setup
+
+### Dataset
+
+We made use of pretrained models finetuned on the MSMARCO dataset for the purpose of our project. The MSMARCO[3] dataset is a benchmarking dataset used for passage and document ranking. It consists of a corpus of queries and corresponding relevant documents which are to be ranked. There are 3.2 million documents in it with a goal of ranking them.
+
+For the purpose of the clincal trials, we used the API provided by clincaltrials.gov to fetch relevant clincal trials based on synthetically created patient cases.
+
+Embarking on the integration of advanced technologies into healthcare demands a conscientious
+consideration of ethical dimensions, with paramount attention to patient privacy and data security.
+The "Clinical Trial Matching" system places ethical principles at its core, ensuring strict compliance
+with guidelines and regulations governing patient data.
+
+### Implementation
+
+We made use of the sentence-tranformers library offered on HuggingFace to finetune as well as to test our and other pre-trained models. For the purpose of training our model, we trained it according to the MultipleNegativesRankingLoss given in [2] for the ClinicalBERT model instead of the DistilBERT used by the authors. We ran it on a TPU provided on Google Colab and the training took apporximately 20 hours to complete.
+
+The main pipeline of out project is the bi-encoder system, which we have demonstrated in the ClincalTrials_Demo.ipnyb file. The idea behind a bi-encoder is that we have two encoder models, here the various pretrained models as well as our model, which take into one sentence each. In this case, it would be the query and the inclusion criteria of all the clinical trials. Then we take the cosine similarity of each criterion against the query and use the result to sort the clincal trials in order.
+
+We have mainly run our program using Cloud GPUs and TPUs offered by Google Colab. We made extensive use of the HuggingFace library.
 
 ## Results
 
