@@ -3,6 +3,49 @@
 
 HuggingFace model: sravn/msmarco-clincalbert
 
+## Abstract
+
+In the field of healthcare, a critical challenge exists in efficiently connecting patients with appropriate clinical trials that align with their unique medical conditions, demographic factors, and specific criteria.
+Clinical trials represent invaluable opportunities for patients to access cutting-edge treatments and therapies, contribute to medical research, and potentially find solutions to their health concerns.
+However, the process of matching patients with suitable clinical trials is often complex, time-consuming, and can lead to missed opportunities for both patients and medical researchers.
+Our project is an implementation of a model that aims to address this issue and ease the process of patient to trial matching. We have implemented a document-ranking approach to our project, where we use pretrained models finetuned for the purpose of document ranking and then use this model to rank the clincal trials to find the most relevant for a particular clincal case.
+
+## Introduction
+
+The landscape of healthcare is continuously evolving, marked by breakthroughs in medical science,
+technological advancements, and a growing emphasis on personalized patient care. At the heart
+of this dynamic ecosystem lies the crucial domain of clinical trials, playing an instrumental role in
+advancing medical knowledge, testing innovative treatments, and shaping the future of healthcare.
+Clinical trials, by design, aim to investigate the safety and efficacy of new drugs, therapies, or
+medical interventions. However, a persistent challenge in the realm of clinical research is the efficient
+and timely recruitment of eligible participants. 
+
+The traditional methods of patient recruitment for
+clinical trials often involve manual screening of medical records, a process susceptible to delays,
+inefficiencies, and missed opportunities for patients to access potentially life-changing treatments.
+In response to these challenges, the intersection of healthcare and cutting-edge technologies has
+given rise to innovative solutions. One such transformative solution is the integration of Natural
+Language Processing (NLP) and machine learning into the clinical trial recruitment process. This
+project explores the development and implementation of a sophisticated "Clinical Trial Matching"
+system, leveraging these advanced technologies to revolutionize the patient recruitment landscape.
+
+
+## Results
+
+The results can be divided into two parts: first we test the performance of a ClincalBERT model on the MSMARCO dev dataset and second, we view the performance of the model for the purpose of ranking clinical trials.
+
+It is to be noted that since the ClincalBERT model is not directly supported by sentence-tranformers some of the weights are initialized using Mean Pooling during training.
+
+### MSMARCO - Test
+
+The model which had been trained[2] as described above was tested using the evaluation script provided in [2] and also separetely to obtain the various metrics for the model.
+
+|Accuracy | Precision | Recall | Mean Reciprocal Rank | Mean Average Precision | NDCG |
+|---------|-----------|--------|----------------------|------------------------|------|
+| 0.9290830945558739 | 0.09802292263610315 | 0.9240210124164278 | 0.815079763041796 | 0.815079763041796 | 0.8381790579726461 |
+
+In the above table, the mean reciprocal rank refers to the metric that can evaluate a ranking system by taking the recirpocal of the rank at which the first relevant document is found. The higher the MRR is, the better is the model performance.
+
 
 ## References
 
