@@ -1,8 +1,6 @@
 # Clinical-Trial-Matching
 ### Devi Phani Sravanthi Nittala and Pramod Kumar Undrakonda
 
-HuggingFace model: sravn/msmarco-clincalbert
-
 ## Abstract
 
 In the field of healthcare, a critical challenge exists in efficiently connecting patients with appropriate clinical trials that align with their unique medical conditions, demographic factors, and specific criteria.
@@ -44,7 +42,31 @@ The model which had been trained[2] as described above was tested using the eval
 |---------|-----------|--------|----------------------|------------------------|------|
 | 0.9290830945558739 | 0.09802292263610315 | 0.9240210124164278 | 0.815079763041796 | 0.815079763041796 | 0.8381790579726461 |
 
-In the above table, the mean reciprocal rank refers to the metric that can evaluate a ranking system by taking the recirpocal of the rank at which the first relevant document is found. The higher the MRR is, the better is the model performance.
+In the above table, the mean reciprocal rank refers to the metric that can evaluate a ranking system by taking the recirpocal of the rank at which the first relevant document is found. The higher the MRR is, the better is the model performance. The next is the mean average precision which is essentially the mean of the average precisions for each query, over the entire corpus. The accuracy of our system is fairly high showing that the model performs well over the test set as well.
+
+### Clincal Trial - Test
+
+We test the same query against the first 20 clincal trials that have been fetched from the clincaltrials.gov for a given condition. For the case shown below, the condition taken was 'heart attack'. We encoded the query and then comapred against the encoding for the Inclusion criteria which dictates a set of conditions that a patient must match in order to be eligible for a clinical study. The query was given as follows:
+
+`A 45 year old with a clinical diagnosis of ST-segment elevation acute myocardial infarction.`
+
+We considered the following models and mentioned below each model is the NCT ID, i.e. the unique ID given to each clinical study, and the cosine similarity obtained w.r.t. the above query.
+
+| Model | Our Model (sravn/msmarco-clincalbert) | sentence-transformers/msmarco-bert-base-dot-v5 | Capreolus/bert-base-msmarco | sentence-transformers/msmarco-MiniLM-L6-cos-v5 |
+|---|--|--|--|--|
+| NCT ID of 1st ranked trial | NCT01484158 | NCT01484158 | NCT01109225 | NCT01484158 |
+|---|--|--|--|--|
+| Cosine Similarity | 0.6799761056900024 | 0.9552577137947083 | 0.9649959206581116 | 0.717819094657898|
+
+As we can see in the above results, our model as well as the models trained by the sentence-transformers return the same (and correct) most relevant clincal trial, however, unlike our model, the other had a higher cosine similarity. The model ' Capreolus/bert-base-msmarco' gave another trial as the most relevant trial with a lower cosine similarity. We conclude that our model performs well for the ranking of the clinical trials, however, we must further test it with more detailed patients descriptions. 
+
+(The most relevant clinical trial was: Gait Speed for Predicting Cardiovascular Events After Myocardial Infarction)
+
+## Relevant Links:
+
+HuggingFace model: sravn/msmarco-clincalbert
+
+Clincal Trials Repository: https://clinicaltrials.gov
 
 
 ## References
